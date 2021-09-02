@@ -1,0 +1,26 @@
+{
+    "name": "typescript_quickstart",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "clean": "rm -rf dist/*",
+        "start": "npm run clean && tsc && node dist/app.js",
+        "start:dev": "tsc && nodemon src/app.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@koa/router": "^10.1.1",
+        "koa": "^2.13.1",
+        "koa-bodyparser": "^4.3.0",
+        "superagent": "^6.1.0"
+    },
+    "devDependencies": {
+        "@types/koa": "^2.13.4",
+        "@types/koa-bodyparser": "^4.3.3",
+        "@types/superagent": "^4.1.12",
+        "nodemon": "^2.0.12"
+    }
+}
