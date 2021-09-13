@@ -1,4 +1,5 @@
 import { Context } from "koa";
+import { db, getCities } from "./database/firebase";
 import { getTodos } from "./misc/controlFlow";
 import { carRouter } from "./routers/car.router";
 import { logger } from "./utils/logger";
@@ -51,6 +52,10 @@ app.use(async (ctx: Context, next) => {
         };
     }
 })
+
+// Firebase database
+// const database = db;
+// await getCities(database);
 
 const port = process.env.PORT || 8080; 
 app.listen(port, () => {
