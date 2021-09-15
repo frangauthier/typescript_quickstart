@@ -1,5 +1,5 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 // TODO: Replace the following with your app's Firebase project configuration
 // Your web app's Firebase configuration
@@ -15,6 +15,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const cars = collection(db, 'cars')
+export const rentals = collection(db, 'rentals')
 
 // Get a list of cities from your database
 export async function getCities(db) {
