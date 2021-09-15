@@ -5,15 +5,17 @@
     "main": "index.js",
     "scripts": {
         "clean": "rm -rf dist/*",
-        "start": "npm run clean && tsc && node dist/app.js",
+        "start": "tsc && node dist/app.js",
         "start:dev": "tsc && nodemon src/app.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@azure/cosmos": "^3.14.1",
         "@koa/router": "^10.1.1",
         "koa": "^2.13.1",
+        "koa-basic-auth": "^4.0.0",
         "koa-bodyparser": "^4.3.0",
         "superagent": "^6.1.0"
     },
