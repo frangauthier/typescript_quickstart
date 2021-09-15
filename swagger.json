@@ -5,19 +5,69 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/pet": {
+        "/cars": {
             "get": {
-                "description": "Get a single pet",
+                "description": "Get a single car",
+                "responses": {
+                    "200": {
+                        "description": "a car to be returned"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new car",
                 "parameters": [{
-                    "in": "query",
-                    "name": "id",
-                    "description": "Pet id",
-                    "required": false
+                    "in": "body",
+                    "name": "body",
+                    "description": "Car object that needs to be added",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Car"
+                    }
                 }],
                 "responses": {
                     "200": {
-                        "description": "a pet to be returned"
+                        "description": "A car has been created"
                     }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Car": {
+                "type": "object",
+                "properties": {
+                    "color": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "shipDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Order Status",
+                        "enum": [
+                            "placed",
+                            "approved",
+                            "delivered"
+                        ]
+                    },
+                    "complete": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "xml": {
+                    "name": "Order"
                 }
             }
         }
