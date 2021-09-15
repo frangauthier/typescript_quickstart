@@ -1,6 +1,6 @@
 import { Car, iCar } from "../interfaces/iCar";
 import { cars, db } from "../database/firebase";
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 // export function createCar(carInfo) {
 //     container.items.create(city);
 // }
@@ -25,6 +25,16 @@ export async function readCars() {
     querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
     })
+}
+
+export async function searchCar(query) {
+    const queryCar = query(cars, where("color", "==", query.color));
+
+    const querySnapshot = await getDocs(queryCar);
+    querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    });
 }
 
 export async function createCar(car: Car) {

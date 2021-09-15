@@ -1,4 +1,4 @@
-import { createCar, deleteCar, readCarById, readCars, updateCar } from "../services/car.service";
+import { createCar, deleteCar, readCarById, readCars, searchCar, updateCar } from "../services/car.service";
 import { Context } from "koa";
 const Router = require('@koa/router');
 
@@ -11,6 +11,11 @@ carRouter.get('/', async (ctx) => {
     await readCarById('gzMgNG8KeSusbzHchWgq');
     ctx.body = 'Car route 1';
 });
+
+carRouter.get('/search', async (ctx) => {
+    const result = await searchCar(ctx.request.query)
+    ctx.body = result;
+})
 
 carRouter.get('/all', async (ctx) => {
     await readCars();
