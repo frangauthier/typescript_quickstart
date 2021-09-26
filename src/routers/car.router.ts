@@ -1,6 +1,5 @@
-import { readCar } from "../services/car.service";
+import { createCar, deleteCar, readCarById, updateDoc, upsertCar } from "../services/car.service";
 import { getTodos } from "../misc/controlFlow";
-import { Car, iCar } from "../interfaces/iCar";
 import { Context } from "koa";
 const Router = require('@koa/router');
 
@@ -10,25 +9,37 @@ export const carRouter = new Router({
 });
 
 carRouter.get('/', async (ctx) => {
-    ctx.body = 'Car route 1';
+    const carId = ctx.request.query.id
+    ctx.body = await readCarById(carId);
+    // ctx.body = 'Car route 1';
 });
 
-carRouter.post('/', (ctx) => {
-    console.log('ctx.request.body: ', ctx.request.body);
-    const newCar: Car = new Car(ctx.request.body);
-    console.log('newCar: ', newCar);
-    ctx.body = 'Car created';
+carRouter.post('/', async (ctx) => {
+    // await createCar(ctx.request.body)
+    const carId = await upsertCar(ctx.request.body)
+    ctx.body = {
+        message: 'Car created',
+        id: carId
+    };
 });
 
-carRouter.put('/', async (ctx) => {
-    console.log('ctx.request.body: ', ctx.request.body);
-    ctx.body = await getTodos();
+carRouter.put('/:id', async (ctx) => {
+    const path = ctx.request.path
+    const pathItems = path.split('/')
+    const carId = pathItems[2]
+    // console.log('ctx.request.body: ', ctx.request.body);
+    await updateDoc(ctx.request.body, carId)
+    ctx.body = {
+        message: 'Car updated',
+        id: carId
+    };
 });
 
-carRouter.delete('/', (ctx: Context) => {
-    const query = ctx.request.query;
-    console.log('query: ', query);
-    console.log('ctx.request.body: ', ctx.request.body);
-    ctx.body = `Ok, deleted id#${query.id}`;
+carRouter.delete('/:id', async (ctx: Context) => {
+    const path = ctx.request.path
+    const pathItems = path.split('/')
+    const carId = pathItems[2]
+    await deleteCar(carId)
+    ctx.body = `Ok, deleted id#${carId}`;
     // ctx.router available
 });

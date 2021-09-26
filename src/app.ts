@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { Context } from "koa";
 import { getTodos } from "./misc/controlFlow";
 import { carRouter } from "./routers/car.router";
