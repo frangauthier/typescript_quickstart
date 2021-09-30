@@ -2,6 +2,7 @@ require('dotenv').config()
 import { Context } from "koa";
 import { getTodos } from "./misc/controlFlow";
 import { carRouter } from "./routers/car.router";
+import { userRouter } from "./routers/user.router";
 import { logger } from "./utils/logger";
 
 const Koa = require('koa');
@@ -36,6 +37,7 @@ app.use(async (ctx: Context, next) => {
 Add routing here
 */
 app.use(carRouter.routes());
+app.use(userRouter.routes());
 
 // logger
 app.use(logger());
