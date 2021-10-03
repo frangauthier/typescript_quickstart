@@ -10,8 +10,8 @@ export const carRouter = new Router({
 
 carRouter.get('/', async (ctx) => {
     const carId = ctx.request.query.id
-    ctx.body = await readCarById(carId);
-    // ctx.body = 'Car route 1';
+    // ctx.body = await readCarById(carId);
+    ctx.body = 'Car route 1';
 });
 
 carRouter.post('/', async (ctx) => {
