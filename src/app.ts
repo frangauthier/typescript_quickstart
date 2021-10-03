@@ -32,15 +32,15 @@ app.use(async (ctx: Context, next) => {
     } 
 })
 
+// logger
+app.use(logger());
+
 // Routing
 /* 
 Add routing here
 */
 app.use(carRouter.routes());
 app.use(userRouter.routes());
-
-// logger
-app.use(logger());
 
 // error handling
 app.use(async (ctx: Context, next) => {
