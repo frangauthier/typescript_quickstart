@@ -1,6 +1,7 @@
 import { createCar, deleteCar, readCarById, updateDoc, upsertCar } from "../services/car.service";
 import { getTodos } from "../misc/controlFlow";
 import { Context } from "koa";
+import { sendMessage } from "../services/websocket.service";
 const Router = require('@koa/router');
 
 export const carRouter = new Router({
@@ -41,4 +42,16 @@ carRouter.delete('/:id', async (ctx: Context) => {
     await deleteCar(carId)
     ctx.body = `Ok, deleted id#${carId}`;
     // ctx.router available
+});
+
+carRouter.post('/message', async (ctx) => {
+    
+    const message = ctx.request.body.message
+
+    await sendMessage(message);
+    // await publishDelivery(message);
+
+    ctx.body = {
+        message: 'Message sent'
+    };
 });
