@@ -1,46 +1,25 @@
 require('dotenv').config()
 import { Context } from "koa";
-import { getTodos } from "./misc/controlFlow";
 import { carRouter } from "./routers/car.router";
-import { userRouter } from "./routers/user.router";
+import { healthRouter } from "./routers/healthcheck.router";
+import { rentalRouter } from "./routers/rental.router";
+import { headerAuth } from "./services/auth.service";
 import { logger } from "./utils/logger";
 
 const Koa = require('koa');
-const Router = require('@koa/router');
-const auth = require('koa-basic-auth');
 const bodyParser = require('koa-bodyparser');
-// const auth = require('koa-basic-auth');
+const cors = require('@koa/cors');
 const app = new Koa();
-// const router = new Router();
 
-// bodyparser
+// bodyparser & CORS
 app.use(bodyParser())
+app.use(cors());
 
-// // require auth
-// app.use(auth({ name: 'me', pass: '1234' }));
+// Health check route
+app.use(healthRouter.routes());
 
-// // homemade auth
-const apiKey = process.env.API_KEY || '1234';
-app.use(async (ctx: Context, next) => {
-    if(ctx.path === '/' && ctx.request.method === 'GET'){
-        ctx.body = 'Health check: ok!'
-    } else if(ctx.headers && ctx.headers['x-api-key'] === apiKey) {
-        await next();
-    } else {
-        ctx.status = 401;
-        ctx.body = 'Unauthorized: missing x-api-key header'
-    } 
-})
-
-// logger
-app.use(logger());
-
-// Routing
-/* 
-Add routing here
-*/
-app.use(carRouter.routes());
-app.use(userRouter.routes());
+// auth
+app.use(headerAuth)
 
 // error handling
 app.use(async (ctx: Context, next) => {
@@ -55,6 +34,14 @@ app.use(async (ctx: Context, next) => {
     }
 })
 
+// Routing
+app.use(carRouter.routes());
+app.use(rentalRouter.routes());
+
+// logger
+app.use(logger());
+
+// Start the app
 const port = process.env.PORT || 8080; 
 app.listen(port, () => {
     console.log(`Server started. Listening on port ${port}`);
