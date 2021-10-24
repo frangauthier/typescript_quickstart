@@ -6,3 +6,6 @@ dist/
 .env
 
 keys/
+
+coverage/
+.nyc_output/

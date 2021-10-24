@@ -1,0 +1,6 @@
+reporter:
+  - 'html'
+all: true
+exclude:
+  - 'dist/*'
+  - 'coverage/'

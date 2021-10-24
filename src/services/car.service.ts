@@ -17,7 +17,9 @@ export async function upsertCar(carInfo, carId?: string) {
 }
 
 export async function updateCar(carInfo, carId: string): Promise<string> {
+    // console.log('sadas')
     const carRef = await doc(db, 'cars', carId)
+    console.log('carRef: ', carRef);
     await setDoc(carRef, carInfo, { merge: true })
     return carId;
 }

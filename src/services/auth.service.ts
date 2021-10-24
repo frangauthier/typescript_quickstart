@@ -13,5 +13,5 @@ export async function headerAuth(ctx: Context, next) {
     } else {
         ctx.status = 401;
         ctx.body = 'Unauthorized'
-    } 
+    }
 }

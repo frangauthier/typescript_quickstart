@@ -6,7 +6,12 @@
     "scripts": {
         "clean": "rm -rf dist/*",
         "start": "tsc && node dist/app.js",
-        "start:dev": "tsc && nodemon src/app.ts"
+        "start:dev": "tsc && nodemon src/app.ts",
+        "build": "tsc",
+        "coverage": "nyc --reporter=text-lcov mocha test/**/*.js",
+        "test:dev": "npm run build && nyc --reporter=html mocha test/**/*.js",
+        "test:ts": "npm run build && nyc --reporter=html mocha --require ts-node/register test/**/*.ts",
+        "test:prod": "mocha test/**/*.js --reporter mocha-junit-reporter --reporter-options mochaFile=./test/unitTestResult.xml --timeout 60000 --exit"
     },
     "keywords": [],
     "author": "",
@@ -21,6 +26,7 @@
         "koa": "^2.13.1",
         "koa-basic-auth": "^4.0.0",
         "koa-bodyparser": "^4.3.0",
+        "nyc": "^15.1.0",
         "superagent": "^6.1.0",
         "typescript": "^4.4.3",
         "ws": "^8.2.3"
@@ -28,11 +34,17 @@
     "devDependencies": {
         "@types/koa": "^2.13.4",
         "@types/koa-bodyparser": "^4.3.3",
+        "@types/mocha": "^9.0.0",
         "@types/superagent": "^4.1.12",
         "@types/ws": "^8.2.0",
         "@typescript-eslint/eslint-plugin": "^4.31.2",
         "@typescript-eslint/parser": "^4.31.2",
+        "chai": "^4.3.4",
         "eslint": "^7.32.0",
-        "nodemon": "^2.0.12"
+        "mocha": "^9.1.3",
+        "mocha-junit-reporter": "^2.0.2",
+        "nodemon": "^2.0.12",
+        "sinon": "^11.1.2",
+        "ts-node": "^10.4.0"
     }
 }
