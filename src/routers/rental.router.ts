@@ -8,7 +8,7 @@ export const rentalRouter = new Router({
 
 rentalRouter.get('/', async (ctx) => {
     const rentalId = ctx.request.query.id
-    ctx.body = readRentalById(rentalId);
+    ctx.body = await readRentalById(rentalId);
 });
 
 rentalRouter.get('/all', async (ctx) => {

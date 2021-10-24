@@ -36,7 +36,7 @@ export async function readRentalById(rentalId: string) {
     const rentalRef = await doc(db, 'rentals', rentalId);
     const rentalDocument = await getDoc(rentalRef);
     if(rentalDocument.exists()) {
-        return rentalDocument.data
+        return rentalDocument.data()
     } 
     return null;
 }

@@ -1,6 +1,7 @@
 require('dotenv').config()
 import { Context } from "koa";
 import { carRouter } from "./routers/car.router";
+import { chatRouter } from "./routers/chat.router";
 import { healthRouter } from "./routers/healthcheck.router";
 import { rentalRouter } from "./routers/rental.router";
 import { headerAuth } from "./services/auth.service";
@@ -17,6 +18,9 @@ app.use(cors());
 
 // Health check route
 app.use(healthRouter.routes());
+
+// logger
+app.use(logger());
 
 // auth
 app.use(headerAuth)
@@ -37,9 +41,7 @@ app.use(async (ctx: Context, next) => {
 // Routing
 app.use(carRouter.routes());
 app.use(rentalRouter.routes());
-
-// logger
-app.use(logger());
+app.use(chatRouter.routes());
 
 // Start the app
 const port = process.env.PORT || 8080; 
