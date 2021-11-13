@@ -7,6 +7,23 @@ export const carRouter = new Router({
     prefix: '/cars'
 });
 
+carRouter.get('/all', ctx => {
+    const cars = [{
+        carId: 123,
+        color: 'blue',
+        model: 'civic',
+        year: 1999,
+        inRental: true
+    },{
+        carId: 234,
+        color: 'red',
+        model: 'Tesla',
+        year: 2016,
+        inRental: false
+    }]
+    ctx.body = cars;
+})
+
 carRouter.get('/', async (ctx) => {
     const carId = ctx.request.query.id
     ctx.body = await readCarById(carId);
